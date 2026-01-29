@@ -147,25 +147,6 @@ public class RobotContainer {
  
 
           }
-            /* TODO     
-             * Auto Chooser DONE
-             * Build paths and Autos DONE
-             * Integrate LEDs to commands
-             * Investigate loop overruns
-             * Remove dead code blocks DONE
-             * Find a cleaner way to declare these buttons and commands DONE
-             * Look at switch statements for defining lists of things (buttons, autons, setpoints, etc.)
-             * Program autons DONE
-             * Autons with pathweaver DONE
-             * Design a new drivestation that fits this laptop and the joysticks IN PROGRESS (depending on drake)
-             * 
-             * General Notes:
-             * I think we're using commands for too simple of tasks. I think we can handle individual things 
-             * (toggling states of things especially) with instant commands instead. I think the commands should be used when
-             * we're grouping things together to keep the buik of the logic out of this file and in the command files.
-             * Also learned that our smart dashboard calls should go in the periodic section of the subsystem. i agree
-             */
-
 
     private void toggleFieldOriented () {
         fieldOriented = !fieldOriented;
