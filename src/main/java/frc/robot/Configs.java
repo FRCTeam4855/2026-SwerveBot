@@ -2,10 +2,6 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.FeedbackSensor;
-import com.revrobotics.spark.config.ClosedLoopConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import frc.robot.Constants.ModuleConstants;
 
 public final class Configs {
@@ -34,9 +30,11 @@ public final class Configs {
             driveConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(ModuleConstants.kDrivingP, ModuleConstants.kDrivingI, ModuleConstants.kDrivingD)
-                .velocityFF(drivingVelocityFeedForward)
-                .outputRange(ModuleConstants.kDrivingMinOutput, ModuleConstants.kDrivingMaxOutput);
-
+                //.velocityFF(drivingVelocityFeedForward)
+                .outputRange(ModuleConstants.kDrivingMinOutput, ModuleConstants.kDrivingMaxOutput)
+                .feedForward //TODO Figure out actual value
+                    .kV(drivingVelocityFeedForward);
+            
              //TURN CONFIG
 
             turnConfig

@@ -139,16 +139,6 @@ public final class Constants {
     //driver buttons
     public static final int kGyroReset_Start = 3;
     public static final int kFieldOrientedToggle_LB = 4;
-
-    //operator buttons
-
-
-    public static final String kAuton1 = "1. Front Speaker Two Note";
-    public static final String kAuton2 = "2. Front Speaker Launch & Leave";
-    public static final String kAuton3 = "3. Source Side Leave";
-    public static final String kAuton4 = "4. Blue Amp Side Leave";
-    public static final String kAuton5 = "5. Red Amp Side Leave";
-    public static final String kAuton6 = "6. Test Sequential Command";
   }
 
 

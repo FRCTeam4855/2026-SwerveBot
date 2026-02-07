@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,14 +14,11 @@ import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
 import frc.robot.commands.DriveWithAprilTagCommandOffset;
-import frc.robot.commands.TimedLeftStrafeCommand;
-import frc.robot.commands.TimedRightStrafeCommand;
+import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LightsSubsystem;
-import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -39,7 +35,7 @@ public class RobotContainer {
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final LightsSubsystem m_lights = new LightsSubsystem();
-    private final Limelight m_limelight = new Limelight();
+    private final Camera m_arducam = new Camera("Arducam_Tag");
    
 
     // The driver's controller
@@ -96,11 +92,11 @@ public class RobotContainer {
 
         new JoystickButton(m_leftDriverController, OIConstants.kJS_LB)
             .whileTrue(new DriveWithAprilTagCommandOffset(
-                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, true));
+                m_robotDrive, m_arducam, m_leftDriverController, m_rightDriverController, true));
 
         new JoystickButton(m_leftDriverController, OIConstants.kJS_RB)
             .whileTrue(new DriveWithAprilTagCommandOffset(
-                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, false));
+                m_robotDrive, m_arducam, m_leftDriverController, m_rightDriverController, false));
        
         new JoystickButton(m_rightDriverController, OIConstants.kJS_RB).debounce(0.1)  //Gyro reset
             .whileTrue(new InstantCommand(
@@ -121,7 +117,7 @@ public class RobotContainer {
 
         new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)
             .whileTrue(new DriveWithAprilTagCommand(
-            m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
+            m_robotDrive, m_arducam, m_leftDriverController, m_rightDriverController));
         
         
         // Operator Controls
@@ -147,25 +143,6 @@ public class RobotContainer {
  
 
           }
-            /* TODO     
-             * Auto Chooser DONE
-             * Build paths and Autos DONE
-             * Integrate LEDs to commands
-             * Investigate loop overruns
-             * Remove dead code blocks DONE
-             * Find a cleaner way to declare these buttons and commands DONE
-             * Look at switch statements for defining lists of things (buttons, autons, setpoints, etc.)
-             * Program autons DONE
-             * Autons with pathweaver DONE
-             * Design a new drivestation that fits this laptop and the joysticks IN PROGRESS (depending on drake)
-             * 
-             * General Notes:
-             * I think we're using commands for too simple of tasks. I think we can handle individual things 
-             * (toggling states of things especially) with instant commands instead. I think the commands should be used when
-             * we're grouping things together to keep the buik of the logic out of this file and in the command files.
-             * Also learned that our smart dashboard calls should go in the periodic section of the subsystem. i agree
-             */
-
 
     private void toggleFieldOriented () {
         fieldOriented = !fieldOriented;
