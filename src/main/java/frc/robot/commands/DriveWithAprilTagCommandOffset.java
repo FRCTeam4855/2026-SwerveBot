@@ -4,25 +4,25 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.Limelight;
 
 public class DriveWithAprilTagCommandOffset extends Command {
 
 	private DriveSubsystem driveSubsystem;
-	private Limelight limelight;
+	private Camera camera;
 	private Joystick joystickLeft, joystickRight;
 	private boolean leftBranch;
 	public static final double JOYSTICK_AXIS_THRESHOLD = 0.15;
 
-	public DriveWithAprilTagCommandOffset(DriveSubsystem driveSubsystem, Limelight limelight, Joystick joystickLeft, Joystick joystickRight, boolean leftBranch) {
+	public DriveWithAprilTagCommandOffset(DriveSubsystem driveSubsystem, Camera camera, Joystick joystickLeft, Joystick joystickRight, boolean leftBranch) {
 		this.driveSubsystem = driveSubsystem;
-		this.limelight = limelight;
+		this.camera = camera;
 		this.joystickLeft = joystickLeft;
 		this.joystickRight = joystickRight;
 		this.leftBranch = leftBranch;
 		addRequirements(driveSubsystem);
-		addRequirements(limelight);
+		addRequirements(camera);
 	}
 
 	// Called just before this Command runs the first time
@@ -34,18 +34,18 @@ public class DriveWithAprilTagCommandOffset extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	public void execute() {
-		if (limelight.limelightHasTarget) {
+		if (camera.hasTargets) {
 			if (leftBranch) {
 			driveSubsystem.drive(
 				-MathUtil.applyDeadband(joystickLeft.getY() * OIConstants.kSpeedMultiplierPrecise, JOYSTICK_AXIS_THRESHOLD),
-				-MathUtil.applyDeadband(limelight.tagPose[0] - .15, .01),
-				-MathUtil.applyDeadband(limelight.tagPose[4]/90 + joystickRight.getX() * 0.25, .02),
+				-MathUtil.applyDeadband(camera.targetCoords[0] - .15, .01),
+				-MathUtil.applyDeadband(camera.targetCoords[2] / 90 + joystickRight.getX() * 0.25, .02),
 				false, true);
 			} else {
 			driveSubsystem.drive(
 				-MathUtil.applyDeadband(joystickLeft.getY() * OIConstants.kSpeedMultiplierPrecise, JOYSTICK_AXIS_THRESHOLD),
-				-MathUtil.applyDeadband(limelight.tagPose[0] + .15, .01),
-				-MathUtil.applyDeadband(limelight.tagPose[4]/90 + joystickRight.getX() * 0.25, .02),
+				-MathUtil.applyDeadband(camera.targetCoords[0] + .15, .01),
+				-MathUtil.applyDeadband(camera.targetCoords[2] / 90 + joystickRight.getX() * 0.25, .02),
 				false, true);
 			}
 		} else {
