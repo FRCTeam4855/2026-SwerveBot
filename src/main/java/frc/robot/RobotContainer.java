@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.AutoBuilder;
 import frc.robot.commands.DriveWithSensorCommand;
+import frc.robot.commands.DriveWithUltrasonicCommand;
 
 //import frc.robot.subsystems.Limelight;
 /*
@@ -121,7 +122,10 @@ public class RobotContainer {
             m_robotDrive, m_arducam, m_leftDriverController, m_rightDriverController));
 
         new JoystickButton(m_leftDriverController, 14)
-            .whileTrue(new DriveWithSensorCommand(m_robotDrive));
+            .whileTrue(new DriveWithSensorCommand(m_robotDrive, .25));
+
+        new JoystickButton(m_leftDriverController, 15)
+            .whileTrue(new DriveWithUltrasonicCommand(m_robotDrive, .25));
         
         
         // Operator Controls

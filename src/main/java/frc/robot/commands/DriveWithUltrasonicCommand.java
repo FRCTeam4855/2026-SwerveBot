@@ -3,11 +3,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.SensorSubsystem;
-public class DriveWithSensorCommand extends Command {
+
+public class DriveWithUltrasonicCommand extends Command {
+
     DriveSubsystem drive;
-    double speed;
-    
-    public DriveWithSensorCommand(DriveSubsystem drive, double speed) {
+    Double speed;
+
+    public DriveWithUltrasonicCommand(DriveSubsystem drive, Double speed) {
         this.drive = drive;
         this.speed = speed;
         addRequirements(drive);
@@ -15,25 +17,20 @@ public class DriveWithSensorCommand extends Command {
 
     @Override
     public void initialize() {
-        System.out.println("DriveWithSensorCommand initialized");
+        System.out.println("DriveWithUltrasonicCommand Initialized");
     }
 
-    @Override
+    @Override 
     public void execute() {
-        drive.drive(speed, 0, 0, false, true);
+        drive.drive(speed, 0, 0, isFinished(), isScheduled());
     }
 
     @Override
     public boolean isFinished() {
-        if(SensorSubsystem.getSensor1() && !SensorSubsystem.getSensor2()) {
+        if (SensorSubsystem.getUltrasonic() < 30) {
             return true;
         } else {
             return false;
         }
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        System.out.println("DriveWithSensorCommand finished");
     }
 }
