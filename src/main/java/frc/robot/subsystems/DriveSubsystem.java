@@ -29,6 +29,8 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 // import com.pathplanner.lib.util.ReplanningConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -79,6 +81,11 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       });
 
+  private DigitalInput sensor1;
+  private DigitalInput sensor2;
+  public boolean sensor1Tripped;
+  public boolean sensor2Tripped;
+
   private Field2d m_field = new Field2d();  //4855
   
   /** Creates a new DriveSubsystem. */
@@ -120,8 +127,10 @@ public class DriveSubsystem extends SubsystemBase {
     // Set up custom logging to add the current path to a field 2d widget
     PathPlannerLogging.setLogActivePathCallback((poses) -> m_field.getObject("path").setPoses(poses));
 
-    SmartDashboard.putData("Field", m_field);
+    sensor1 = new  DigitalInput(0);
+    sensor2 = new  DigitalInput(1);
 
+    SmartDashboard.putData("Field", m_field);
   }
 
   /**
@@ -145,7 +154,11 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
     m_field.setRobotPose(m_odometry.getPoseMeters()); //4855
+    sensor1Tripped = !sensor1.get();
+    sensor2Tripped = !sensor2.get();
     SmartDashboard.putNumber("GyroAngle", Rotation2d.fromDegrees(getStdAngle()).getDegrees());
+    SmartDashboard.putBoolean("Sensor 1", sensor1Tripped);
+    SmartDashboard.putBoolean("Sensor 2", sensor2Tripped);
   }
 
   /**

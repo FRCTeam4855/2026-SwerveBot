@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+
 import com.pathplanner.lib.config.PIDConstants;
 
 /**
@@ -159,6 +160,11 @@ public final class Constants {
 
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
+  }
+
+  public static final class CameraConstants {
+    public static final int[] kHubTargetsRed = {8, 10, 11}; //The targets we want to track for lining up with the hub
+    public static final int[] kHubTargetsBlue = {24, 26, 27};
   }
   
   public static final class LightsConstants {

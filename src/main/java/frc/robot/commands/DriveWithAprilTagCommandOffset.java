@@ -38,13 +38,13 @@ public class DriveWithAprilTagCommandOffset extends Command {
 			if (leftBranch) {
 			driveSubsystem.drive(
 				-MathUtil.applyDeadband(joystickLeft.getY() * OIConstants.kSpeedMultiplierPrecise, JOYSTICK_AXIS_THRESHOLD),
-				-MathUtil.applyDeadband(camera.targetCoords[0] - .15, .01),
+				-MathUtil.applyDeadband(camera.targetCoords[1] - .15, .01),
 				-MathUtil.applyDeadband(camera.targetCoords[2] / 90 + joystickRight.getX() * 0.25, .02),
 				false, true);
 			} else {
 			driveSubsystem.drive(
 				-MathUtil.applyDeadband(joystickLeft.getY() * OIConstants.kSpeedMultiplierPrecise, JOYSTICK_AXIS_THRESHOLD),
-				-MathUtil.applyDeadband(camera.targetCoords[0] + .15, .01),
+				-MathUtil.applyDeadband(camera.targetCoords[1] + .15, .01),
 				-MathUtil.applyDeadband(camera.targetCoords[2] / 90 + joystickRight.getX() * 0.25, .02),
 				false, true);
 			}

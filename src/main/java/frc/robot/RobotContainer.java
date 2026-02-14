@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.AutoBuilder;
+import frc.robot.commands.DriveWithSensorCommand;
 
 //import frc.robot.subsystems.Limelight;
 /*
@@ -35,7 +36,7 @@ public class RobotContainer {
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final LightsSubsystem m_lights = new LightsSubsystem();
-    private final Camera m_arducam = new Camera("Arducam_Tag");
+    private final Camera m_arducam = new Camera("Arducam_Tag", true);
    
 
     // The driver's controller
@@ -118,6 +119,9 @@ public class RobotContainer {
         new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)
             .whileTrue(new DriveWithAprilTagCommand(
             m_robotDrive, m_arducam, m_leftDriverController, m_rightDriverController));
+
+        new JoystickButton(m_leftDriverController, 14)
+            .whileTrue(new DriveWithSensorCommand(m_robotDrive));
         
         
         // Operator Controls
